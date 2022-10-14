@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "368969631687",
+    "project_id": "vignan-vikas",
+    "storage_bucket": "vignan-vikas.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:368969631687:android:5c22aab98fe749c6ae3be2",
+        "android_client_info": {
+          "package_name": "com.example.vignanvikas2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "368969631687-bkmmfp7r858irs4c24n4ls25dts99q50.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFJp7Tviv28ffG1s5ZqYfDSR_1xwtLlxA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "368969631687-bkmmfp7r858irs4c24n4ls25dts99q50.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
