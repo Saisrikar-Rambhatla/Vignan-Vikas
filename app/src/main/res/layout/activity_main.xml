@@ -24,7 +24,7 @@
                 android:layout_width="106dp"
                 android:layout_height="106dp"
                 android:background="@mipmap/ic_vitsLogo1"
-                android:padding="0dp" />
+                android:padding="0dp"/>
 
             <TextView
                 android:layout_width="195dp"
@@ -76,7 +76,8 @@
                     android:layout_height="64dp"
                     android:background="@drawable/circle_yellow"
                     android:padding="15dp"
-                    android:src="@drawable/ic_notice" />
+                    android:src="@drawable/ic_notice"
+                    android:layout_gravity="center"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -91,7 +92,8 @@
                     android:padding="5dp"
                     android:text="@string/add_notice"
                     android:textColor="@color/textColor"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:gravity="center"/>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
         <com.google.android.material.card.MaterialCardView
