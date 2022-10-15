@@ -23,7 +23,7 @@
             <ImageView
                 android:layout_width="106dp"
                 android:layout_height="106dp"
-                android:background="@mipmap/ic_vitsLogo1"
+                android:background="@mipmap/ic_vitslogo1"
                 android:padding="0dp"/>
 
             <TextView
