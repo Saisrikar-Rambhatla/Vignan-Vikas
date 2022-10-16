@@ -23,7 +23,7 @@ public class UploadNotice extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_notice);
-        addImage=findViewById(R.id.uploadNoticeButton);
+        addImage=findViewById(R.id.uploadNotice);
         noticeImage=findViewById(R.id.noticeImageView);
         addImage.setOnClickListener(new View.OnClickListener() {
             @Override
