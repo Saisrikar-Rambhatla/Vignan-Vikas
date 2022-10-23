@@ -12,7 +12,6 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.view.View;
 import android.widget.AdapterView;
@@ -33,21 +32,20 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 
-public class Upload_Attendence extends AppCompatActivity {
-    private Spinner attendSection;
-    private Spinner attendDepartment;
-    private CardView addAttendance;
-    private Button uploadAttendence;
+public class UploadNotes extends AppCompatActivity {
+    private Spinner dept;
+    private EditText faculty;
+    private Spinner subject;
+    private Button uploadNotes;
+    private CardView addNotes;
     private EditText fileTitle;
     private String department;
-    private String section;
+    private String sub;
     private final int REQ=1;
-    private Uri attendanceData;
+    private Uri notesData;
     private Bitmap bitMap;
     private DatabaseReference reference;
     private StorageReference storageReference;
@@ -55,27 +53,26 @@ public class Upload_Attendence extends AppCompatActivity {
     private ProgressDialog pd;
     private TextView fileTextView;
     private String fileName,title;
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint({"MissingInflatedId", "WrongViewCast"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_upload_attendence);
-        //reference= FirebaseDatabase.getInstance().getReference().child(department).child(section);
-        //storageReference= FirebaseStorage.getInstance().getReference();
-        attendDepartment=findViewById(R.id.attendDepartment);
-        attendSection=findViewById(R.id.attendSection);
-        addAttendance=findViewById(R.id.addAttendance);
+        setContentView(R.layout.activity_upload_notes);
+        dept=findViewById(R.id.department);
+        subject=findViewById(R.id.subject);
+        faculty=findViewById(R.id.faculty);
         fileTitle=findViewById(R.id.fileTitle);
         fileTextView=findViewById(R.id.fileTextView);
+        addNotes=findViewById(R.id.addNotes);
         pd=new ProgressDialog(this);
-        uploadAttendence=findViewById(R.id.uploadAttendenceButton);
+        uploadNotes=findViewById(R.id.uploadNotesButton);
         String []itemsDept=new String[]{"Select Department","CSE","ECE","Mechanical","Civil","EIE"};
-        String []itemsSection=new String[]{"Select Section","A","B","C"};
-        attendDepartment.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,itemsDept));
-        attendDepartment.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        String []itemsSubject=new String[]{"Select Section","Analog and Digital Electornics","Operating systems","DBMS","COA","Computer networks","Machine learning","Data mining","Data Structures and Algorithms"};
+        dept.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,itemsDept));
+        dept.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                department=attendDepartment.getSelectedItem().toString();
+                department=dept.getSelectedItem().toString();
             }
 
             @Override
@@ -83,11 +80,11 @@ public class Upload_Attendence extends AppCompatActivity {
 
             }
         });
-        attendSection.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,itemsSection));
-        attendSection.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        subject.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,itemsSubject));
+        subject.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                section=attendSection.getSelectedItem().toString();
+                sub=subject.getSelectedItem().toString();
             }
 
             @Override
@@ -95,27 +92,27 @@ public class Upload_Attendence extends AppCompatActivity {
 
             }
         });
-        addAttendance.setOnClickListener(new View.OnClickListener(){
+        addNotes.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view)
             {
                 openGallery();
             }
         });
-        uploadAttendence.setOnClickListener(new View.OnClickListener()
+        uploadNotes.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
                 title=fileTitle.getText().toString();
-                if(attendanceData == null){
-                    Toast.makeText(Upload_Attendence.this,"Please upload file",Toast.LENGTH_SHORT).show();
+                if(notesData == null){
+                    Toast.makeText(UploadNotes.this,"Please upload file",Toast.LENGTH_SHORT).show();
                 }
-                else if(section.equals("Select Section")){
-                    Toast.makeText(Upload_Attendence.this,"Please Select Section",Toast.LENGTH_SHORT).show();
+                else if(sub.equals("Select Section")){
+                    Toast.makeText(UploadNotes.this,"Please Select Subject",Toast.LENGTH_SHORT).show();
                 }
                 else if(department.equals("Select Department")){
-                    Toast.makeText(Upload_Attendence.this,"Please Select Department",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UploadNotes.this,"Please Select Department",Toast.LENGTH_SHORT).show();
                 }
                 else if(title.isEmpty()){
                     fileTitle.setError("Empty");
@@ -131,7 +128,6 @@ public class Upload_Attendence extends AppCompatActivity {
             }
         });
     }
-
     private void uploadFile() {
         /*ByteArrayOutputStream baos=new ByteArrayOutputStream();
         bitMap.compress(Bitmap.CompressFormat.JPEG,50,baos);
@@ -140,28 +136,28 @@ public class Upload_Attendence extends AppCompatActivity {
         pd.setTitle("Please wait");
         pd.setMessage("Uploading file");
         pd.show();
-        StorageReference filePath=storageReference.child("Attendance/"+fileName+"-"+System.currentTimeMillis()+".csv");
+        StorageReference filePath=storageReference.child("Notes/"+fileName+"-"+System.currentTimeMillis()+".pdf");
         //final UploadTask uploadTask=filePath.putBytes(finalImage);
-        filePath.putFile(attendanceData).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Task<Uri> uriTask=taskSnapshot.getStorage().getDownloadUrl();
-                        while (!uriTask.isComplete());
-                        Uri uri=uriTask.getResult();
-                        uploadData(String.valueOf(uri));
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        pd.dismiss();
-                        Toast.makeText(Upload_Attendence.this,"Something went wrong",Toast.LENGTH_SHORT).show();
-                    }
-                });
+        filePath.putFile(notesData).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Task<Uri> uriTask=taskSnapshot.getStorage().getDownloadUrl();
+                while (!uriTask.isComplete());
+                Uri uri=uriTask.getResult();
+                uploadData(String.valueOf(uri));
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                pd.dismiss();
+                Toast.makeText(UploadNotes.this,"Something went wrong",Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
     private void uploadData(String downloadUrl) {
-        reference=reference.child("Attendance/").child(department+"/"+section);
+        reference=reference.child("Notes/").child(department+"/"+sub);
         final String uniqueKey = reference.push().getKey();
         HashMap data=new HashMap();
         data.put("fileTitle",title);
@@ -170,14 +166,14 @@ public class Upload_Attendence extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 pd.dismiss();
-                Toast.makeText(Upload_Attendence.this,"File uploaded sucessfully",Toast.LENGTH_SHORT).show();
+                Toast.makeText(UploadNotes.this,"File uploaded sucessfully",Toast.LENGTH_SHORT).show();
                 fileTitle.setText("");
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 pd.dismiss();
-                Toast.makeText(Upload_Attendence.this,"Failed to upload url",Toast.LENGTH_SHORT).show();
+                Toast.makeText(UploadNotes.this,"Failed to upload url",Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -193,9 +189,9 @@ public class Upload_Attendence extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==REQ && resultCode==RESULT_OK)
         {
-            attendanceData=data.getData();
-            if(attendanceData.toString().startsWith("content://")){
-                Cursor cursor = Upload_Attendence.this.getContentResolver().query(attendanceData, null, null, null, null);
+            notesData=data.getData();
+            if(notesData.toString().startsWith("content://")){
+                Cursor cursor = UploadNotes.this.getContentResolver().query(notesData, null, null, null, null);
                 try {
                     if(cursor!=null && cursor.moveToFirst()){
                         fileName=cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
@@ -204,8 +200,8 @@ public class Upload_Attendence extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-            else if(attendanceData.toString().startsWith("file://")){
-                fileName = new File(attendanceData.toString()).getName();
+            else if(notesData.toString().startsWith("file://")){
+                fileName = new File(notesData.toString()).getName();
 
             }
             fileTextView.setText(fileName);

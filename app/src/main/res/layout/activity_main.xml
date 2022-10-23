@@ -213,37 +213,6 @@
             android:layout_width="130dp"
             android:layout_height="150dp"
             android:layout_margin="10dp"
-            android:id="@+id/uploadAssignment">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_gravity="center">
-                <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:background="@drawable/circle_purple"
-                    android:src="@drawable/ic_assignment"
-                    android:padding="15dp"/>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/lightGrey"
-                    android:layout_marginTop="10dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/upload_assignment"
-                    android:textStyle="bold"
-                    android:padding="5dp"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/textColor"/>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="130dp"
-            android:layout_height="150dp"
-            android:layout_margin="10dp"
             android:id="@+id/updatePerformance">
             <LinearLayout
                 android:layout_width="match_parent"
