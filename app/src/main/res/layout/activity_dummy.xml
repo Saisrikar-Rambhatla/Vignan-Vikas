@@ -54,7 +54,7 @@
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:padding="30dp"
-            android:text="@string/update_attendence"
+            android:text="@string/update_performance"
             android:textColor="@color/black"
             android:textSize="23dp"
             android:textStyle="bold" />
@@ -74,7 +74,7 @@
             android:layout_marginHorizontal="50dp"
             android:layout_marginTop="20dp"
             android:background="@color/lightPink"
-            android:text="@string/upload_Csv_Attendance"
+            android:text="@string/upload_Csv_Performance"
             android:textAllCaps="false" />
 
         <com.google.android.material.button.MaterialButton
@@ -83,7 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="50dp"
             android:layout_marginTop="20dp"
-            android:text="@string/uploadJsonAttendance"
+            android:text="@string/uploadJsonPerformance"
             android:textAllCaps="false" />
     </LinearLayout>>
 </LinearLayout>

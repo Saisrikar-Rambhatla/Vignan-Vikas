@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 
   public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-      CardView uploadNotice,addAttendance,uploadNotes;
+      CardView uploadNotice,addAttendance,uploadNotes,updatePerformance;
       Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +20,8 @@ import android.view.View;
         addAttendance.setOnClickListener(this);
         uploadNotes=findViewById(R.id.uploadBooks);
         uploadNotes.setOnClickListener(this);
+        updatePerformance=findViewById(R.id.updatePerformance);
+        updatePerformance.setOnClickListener(this);
     }
 
       @Override
@@ -36,6 +38,10 @@ import android.view.View;
                   break;
               case R.id.uploadBooks:
                   intent=new Intent(MainActivity.this,UploadNotes.class);
+                  startActivity(intent);
+                  break;
+              case R.id.updatePerformance:
+                  intent=new Intent(MainActivity.this, Dummy.class);
                   startActivity(intent);
                   break;
           }
